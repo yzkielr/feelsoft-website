@@ -1,4 +1,10 @@
 export const en = {
+  fromPrice: 'From', variantLabel: 'Variant', sizeLabel: 'Size', lengthLabel: 'Length',
+  variantPlain: 'Plain cream / black', variantSole: 'Sole style (Telapak)', variantPattern: 'Patterned',
+  sizeS: 'S · 26–28 cm', sizeM: 'M · 34–36 cm', sizeL: 'L · 40 cm',
+  splitPriceTitle: 'Split-toe socks, your way.', splitPriceIntro: 'Choose your style and length. Every price below is per dozen.',
+  splitTableCaption: 'Split-toe socks: prices per dozen by variant and size', choosePrice: 'Select a price to enquire about that variant and size.',
+  splitRange: 'Three styles. Sizes S, M and L.', splitChoices: 'Plain · Sole style · Patterned',
   skip: 'Skip to content', announcement: 'From Jakarta, for every step.', shipShort: 'Shipping across Indonesia & worldwide',
   navCollection: 'Collection', navPrices: 'Price list', navAbout: 'About us', contact: 'Let’s talk', navLabel: 'Main navigation', menuLabel: 'Open menu',
   heroEyebrow: 'WHOLESALE SOCKS, BY FEELSOFT', heroLine1: 'Soft on feet.', heroLine2: 'Right for business.',

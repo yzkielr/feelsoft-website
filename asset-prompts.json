@@ -12,6 +12,11 @@
     {
       "path": "dist/assets/split.webp",
       "prompt": "Use case: product-mockup. Asset type: square product photograph for a modern socks wholesale website. A pair of elegant sage green cotton split-toe TABI socks, unmistakably TWO compartments at each toe: one rounded big-toe compartment separated by a clean small gap from the larger compartment for the other four toes. Not five-finger socks, not regular socks. Lay both socks flat diagonally on a solid soft pale mint studio background, one slightly overlapping the other, with separated toe shape clearly visible on the front sock at lower right. Ribbed ankle cuffs, beautiful fine knitted texture, realistic sock anatomy. Soft directional daylight, editorial luxury ecommerce photography, clean modern composition, full socks entirely in frame occupying about 70% of the image. No logos, no text, no packaging, no hands, no watermark. This is a concept illustration, not actual inventory."
+    },
+    {
+      "path": "dist/assets/feelsoft-logo.png",
+      "method": "Built-in imagegen background extraction from the user-supplied logo; supplied lettering, socks and blue disc retained.",
+      "prompt": "Edit target: the attached original Feelsoft logo. Prepare this EXACT supplied logo as a website image asset. ONLY remove the white background OUTSIDE the large navy blue circle, making the area outside the circle transparent. Preserve the complete navy blue circular disc, its exact blue hue, the two white sock symbols, and the original white cursive word Feelsoft without changing, redrawing, restyling, repositioning, or respelling any of them. The text must remain exactly Feelsoft, with original typography. Keep the circle completely intact, centered and fully visible with a small transparent margin. Do not make the white logo lettering or sock icons transparent. Do not add text, shadows, gradients, decorations, extra symbols, or a new logo. Output a faithful clean cutout of the existing brand logo."
     }
   ]
 }

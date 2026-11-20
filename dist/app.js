@@ -1,4 +1,4 @@
-import { config, products, money, parseQuantity, estimate, whatsappUrl } from './core.js';
+import { config, products, money, parseQuantity, estimate, whatsappUrl, unitPrice, minimumPrice, priceRows } from './core.js';
 import { en, messages } from './content.js';
 
 const $ = selector => document.querySelector(selector);
@@ -24,8 +24,12 @@ function setLanguage(value) {
   }
   for (const el of $$('[data-lang]')) el.setAttribute('aria-pressed', String(el.dataset.lang === lang));
   for (const el of $$('[data-price]')) {
-    const p = products.find(product => product.id === el.dataset.price);
-    el.textContent = (lang === 'en' && p.priceIdr !== null ? '≈ ' : '') + money(p.priceIdr, lang);
+    const amount = el.dataset.variant ? unitPrice(el.dataset.price, el.dataset.variant, el.dataset.size) : minimumPrice(el.dataset.price);
+    el.textContent = (lang === 'en' ? '≈ ' : '') + money(amount, lang);
+  }
+  for (const el of $$('[data-order-variant]')) {
+    const variant = translations[lang][{ plain: 'variantPlain', sole: 'variantSole', pattern: 'variantPattern' }[el.dataset.orderVariant]];
+    el.setAttribute('aria-label', `${translations[lang].splitName}, ${variant}, ${el.dataset.orderSize}, ${el.textContent} ${translations[lang].perDozen}`);
   }
   $('#exchange-note').hidden = lang !== 'en';
   for (const el of $$('.usd-indicator')) el.hidden = lang !== 'en';
@@ -36,9 +40,10 @@ function setLanguage(value) {
 }
 
 function updateEstimate() {
+  $('#estimate-variants').hidden = $('#estimate-product').value !== 'split';
   try {
     const qty = parseQuantity($('#estimate-qty').value);
-    $('#estimate-total').textContent = money(estimate('kids', qty), lang);
+    $('#estimate-total').textContent = money(estimate($('#estimate-product').value, qty, $('#estimate-variant').value, $('#estimate-size').value), lang);
     $('#estimate-error').textContent = '';
     $('#estimate-qty').setAttribute('aria-invalid', 'false');
     $('#estimate-order').disabled = false;
@@ -55,9 +60,10 @@ function updateEstimate() {
 }
 
 function updateOrderTotal() {
+  $('#order-variants').hidden = $('#order-product').value !== 'split';
   try {
     const qty = parseQuantity($('#order-quantity').value);
-    $('#order-total').textContent = money(estimate($('#order-product').value, qty), lang);
+    $('#order-total').textContent = money(estimate($('#order-product').value, qty, $('#order-variant').value, $('#order-size').value), lang);
     $('#order-error').textContent = '';
   } catch {
     $('#order-total').textContent = '—';
@@ -66,11 +72,13 @@ function updateOrderTotal() {
 }
 
 function closeMenu() { $('#mobile-nav').hidden = true; $('.menu-toggle').setAttribute('aria-expanded', 'false'); }
-function openOrder(productId = 'kids', quantity = 1) {
+function openOrder(productId = 'kids', quantity = 1, variantId = 'plain', size = 'S') {
   lastFocus = document.activeElement;
   closeMenu();
   $('#order-product').value = productId;
   $('#order-quantity').value = quantity;
+  $('#order-variant').value = variantId;
+  $('#order-size').value = size;
   updateOrderTotal();
   document.body.classList.add('dialog-open');
   $('#order-dialog').showModal();
@@ -78,7 +86,7 @@ function openOrder(productId = 'kids', quantity = 1) {
 function closeOrder() { $('#order-dialog').close(); }
 
 for (const el of $$('[data-lang]')) el.addEventListener('click', () => setLanguage(el.dataset.lang));
-for (const el of $$('[data-order]')) el.addEventListener('click', () => openOrder(el.dataset.order));
+for (const el of $$('[data-order]')) el.addEventListener('click', () => openOrder(el.dataset.order, 1, el.dataset.orderVariant || 'plain', el.dataset.orderSize || 'S'));
 for (const el of $$('[data-filter]')) el.addEventListener('click', () => {
   const category = el.dataset.filter;
   for (const button of $$('[data-filter]')) button.setAttribute('aria-pressed', String(button === el));
@@ -101,7 +109,9 @@ for (const [selector, delta] of [['#quantity-minus', -1], ['#quantity-plus', 1]]
     updateEstimate();
   });
 }
-$('#estimate-order').addEventListener('click', () => { try { openOrder('kids', parseQuantity($('#estimate-qty').value)); } catch { updateEstimate(); } });
+$('#estimate-order').addEventListener('click', () => { try { openOrder($('#estimate-product').value, parseQuantity($('#estimate-qty').value), $('#estimate-variant').value, $('#estimate-size').value); } catch { updateEstimate(); } });
+for (const selector of ['#estimate-product', '#estimate-variant', '#estimate-size']) $(selector).addEventListener('change', updateEstimate);
+for (const selector of ['#order-variant', '#order-size']) $(selector).addEventListener('change', updateOrderTotal);
 $('#order-product').addEventListener('change', updateOrderTotal);
 $('#order-quantity').addEventListener('input', updateOrderTotal);
 $('.close-dialog').addEventListener('click', closeOrder);
@@ -111,14 +121,14 @@ $('#order-form').addEventListener('submit', event => {
   event.preventDefault();
   if (!$('#order-form').reportValidity()) return;
   try {
-    const url = whatsappUrl({ lang, productId: $('#order-product').value, quantity: $('#order-quantity').value, name: $('#order-name').value, destination: $('#order-destination').value, notes: $('#order-notes').value });
+    const url = whatsappUrl({ lang, productId: $('#order-product').value, quantity: $('#order-quantity').value, variantId: $('#order-variant').value, size: $('#order-size').value, name: $('#order-name').value, destination: $('#order-destination').value, notes: $('#order-notes').value });
     window.open(url, '_blank', 'noopener,noreferrer');
   } catch { $('#order-error').textContent = messages[lang].invalidQuantity; }
 });
 
 $('#download-prices').addEventListener('click', () => {
   const t = translations[lang];
-  const rows = [[t.tableProduct, t.tableUnit, t.tablePrice, lang === 'en' ? 'Currency' : 'Mata uang'], ...products.map(p => [p.name[lang], t.oneDozen, p.priceIdr === null ? t.requestPrice : (lang === 'en' ? (p.priceIdr / config.idrPerUsd).toFixed(2) : String(p.priceIdr)), lang === 'en' ? 'USD' : 'IDR']), [], [t.priceNote]];
+  const rows = [[t.tableProduct, t.variantLabel, t.sizeLabel, t.lengthLabel, t.tableUnit, t.tablePrice, lang === 'en' ? 'Currency' : 'Mata uang'], ...priceRows(lang).map(p => [p.product, p.variant, p.size, p.length, t.oneDozen, lang === 'en' ? (p.priceIdr / config.idrPerUsd).toFixed(2) : String(p.priceIdr), lang === 'en' ? 'USD' : 'IDR']), [], [t.priceNote]];
   if (lang === 'en') rows.push([`Indicative conversion: IDR ${config.idrPerUsd}/USD, ${config.rateDate}. Final USD quote to be confirmed.`, config.rateSource]);
   rows.push(['WhatsApp', 'https://wa.me/6282170002960']);
   const csv = '\ufeff' + rows.map(row => row.map(cell => '"' + String(cell).replaceAll('"', '""') + '"').join(',')).join('\r\n');
