@@ -1,0 +1,41 @@
+export const en = {
+  skip: 'Skip to content', announcement: 'From Jakarta, for every step.', shipShort: 'Shipping across Indonesia & worldwide',
+  navCollection: 'Collection', navPrices: 'Price list', navAbout: 'About us', contact: 'Let’s talk', navLabel: 'Main navigation', menuLabel: 'Open menu',
+  heroEyebrow: 'WHOLESALE SOCKS, BY FEELSOFT', heroLine1: 'Soft on feet.', heroLine2: 'Right for business.',
+  heroDescription: 'Bring more choice to your customers. Shop socks by the dozen, tell us what you need, and ship wherever your business takes you.',
+  explore: 'Explore the collection', seePrices: 'View price list', dozenTitle: 'One dozen. More possibilities.', dozenSub: 'All prices & orders are by the dozen.',
+  heroAlt: 'Concept illustration of knitted socks in green, cream and pastel colours', conceptImage: 'Concept visual · not actual product photography',
+  kidsCollection: 'The kids’ collection', perDozen: '/ dozen', benefitDozen: 'Clear pricing by the dozen', benefitContact: 'Talk directly on WhatsApp', benefitShipping: 'Worldwide shipping',
+  collectionEyebrow: 'FIND YOUR NEXT PICK', collectionTitle: 'Little essentials. Big possibilities.',
+  collectionDescription: 'From kids’ socks to split-toe styles. Explore choices for your customers’ everyday needs.', filterLabel: 'Filter collection', filterAll: 'All collections', filterKids: 'Kids', filterSplit: 'Split-toe', unitLabel: 'PRICES PER DOZEN',
+  kidsOpen: 'View kids’ socks', kidsAlt: 'Concept illustration of pastel yellow children’s socks', kidsTag: 'For little steps', illustration: 'Product illustration', kidsName: 'Kids’ socks', kidsSubtitle: 'For your little customers',
+  splitOpen: 'View split-toe socks', splitAlt: 'Concept illustration of socks with a separate big-toe compartment', splitTag: 'Split-toe style', splitName: 'Split-toe socks', splitSubtitle: 'A separate space for the big toe', requestPrice: 'Request price',
+  noteEyebrow: 'LET’S FIND YOUR FIT', noteTitle: 'Your needs. Our starting point.', noteDescription: 'Have a style, size or quantity in mind? Tell us what you are looking for and we’ll check the available options.', discuss: 'Tell us what you need',
+  catalogNote: 'Images are concept illustrations. Actual styles, materials, sizes, colours and availability are confirmed when you enquire.',
+  aboutArt: 'Good things start small.', aboutEyebrow: 'A LITTLE ABOUT US', aboutTitle: 'Rooted in Penjaringan.<br>Ready for your next step.',
+  aboutDescription: 'Feelsoft is here for your wholesale sock needs. Based in Penjaringan, North Jakarta, we make it easy to explore products, compare prices by the dozen and discuss your order directly.',
+  aboutDescription2: 'Whether you are stocking your business or buying in volume, let’s start with the right choice for you.', aboutLink: 'See how ordering works',
+  pricesEyebrow: 'CLEAR PRICES. EASIER PLANNING.', pricesTitle: 'Priced by the dozen.<br>Simple as that.', pricesDescription: 'Plan what you need, then confirm product details and your final order with the Feelsoft team.', download: 'Download price list',
+  tableCaption: 'Feelsoft prices per dozen', tableProduct: 'Collection', tableUnit: 'Unit', tablePrice: 'Price', tableAction: 'Order', oneDozen: '1 dozen', estimateLabel: 'Estimate', order: 'Enquire', ask: 'Ask us',
+  priceNote: 'All prices are per dozen. Shipping charges and order terms are confirmed before payment.', estimatorEyebrow: 'PLAN YOUR ORDER', estimatorTitle: 'How many dozen for you?',
+  quantityMinus: 'Decrease by one dozen', quantityPlus: 'Increase by one dozen', dozen: 'dozen', estimatedSubtotal: 'Estimated product subtotal', shippingSeparate: 'Shipping quoted separately', discussOrder: 'Discuss this order',
+  howEyebrow: 'FROM YOUR PICK TO YOUR ORDER', howTitle: 'It starts with a conversation.', howDescription: 'We’ll help you work through the details, one step at a time.',
+  step1Title: 'Find your collection', step1Body: 'Choose the style you need and decide how many dozen you are looking for.',
+  step2Title: 'Talk through the details', step2Body: 'Reach us on WhatsApp to confirm sizes, colours, availability and your final price.',
+  step3Title: 'Arrange delivery', step3Body: 'Confirm your order and delivery address, anywhere in Indonesia or around the world.',
+  shippingEyebrow: 'NEAR OR FAR', shippingTitle: 'From Jakarta.<br>To wherever you are.', shippingBody: 'We ship across Indonesia and worldwide. Share your destination for shipping costs and an estimated delivery time.', shippingCta: 'Ask about shipping',
+  faqEyebrow: 'BEFORE YOUR FIRST STEP', faqTitle: 'A few things<br>you might wonder.', faqCta: 'Talk to the Feelsoft team',
+  faq1q: 'Are all prices per dozen?', faq1a: 'Yes. Every price and order quantity on this website is expressed in dozens. One dozen contains 12 pairs of socks.',
+  faq2q: 'What is the minimum order?', faq2a: 'Minimum quantities depend on the style and availability. Share your preferred product and quantity with us so we can confirm the details.',
+  faq3q: 'Do you ship internationally?', faq3a: 'Yes. Feelsoft ships across Indonesia and internationally. Shipping costs, estimated delivery times and destination requirements will be confirmed with your order.',
+  faq4q: 'How do I check the actual product?', faq4a: 'Ask for actual product photos, sizes, colours, materials and availability on WhatsApp before confirming your order. Images on this prototype are concept illustrations.',
+  closingEyebrow: 'YOUR NEXT STEP, WITH FEELSOFT', closingTitle: 'Your choice of socks.<br>Our first conversation.', closingCta: 'Let’s start talking',
+  footerTagline: 'For every step.<br>For every possibility.', footerExplore: 'EXPLORE', howNav: 'How to order', footerFind: 'FIND US', address: 'Penjaringan, North Jakarta<br>Indonesia', mapLink: 'View the area', footerTalk: 'LET’S TALK', footerShipping: 'Indonesia & worldwide', footerUnit: 'All prices are per dozen.', prototypeNotes: 'References & prototype notes',
+  orderEyebrow: 'ONE STEP CLOSER', orderTitle: 'Let’s talk about your order.', closeLabel: 'Close', quantityLabel: 'Quantity (dozen)', nameLabel: 'Name / business (optional)', namePlaceholder: 'Your name', destinationLabel: 'Destination city & country', destinationPlaceholder: 'e.g. Singapore, Singapore', notesLabel: 'Anything else? (optional)', notesPlaceholder: 'Sizes, colours or your questions',
+  orderDisclaimer: 'USD amounts are indicative. Shipping, minimum quantities, availability and final prices are confirmed on WhatsApp.', continueWhatsApp: 'Continue on WhatsApp', orderPrivacy: 'WhatsApp opens with a draft message. Nothing is sent until you press Send in WhatsApp.'
+};
+
+export const messages = {
+  id: { invalidQuantity: 'Masukkan jumlah bulat antara 1–100.000 lusin.', downloadReady: 'Daftar harga berhasil diunduh.', title: 'Feelsoft — Kaus kaki untuk setiap langkah', description: 'Kaus kaki grosir Feelsoft dari Penjaringan, Jakarta Utara. Lihat koleksi dan harga per lusin. Pengiriman seluruh Indonesia dan internasional.' },
+  en: { invalidQuantity: 'Enter a whole number between 1 and 100,000 dozen.', downloadReady: 'Price list downloaded.', title: 'Feelsoft — Socks for every step', description: 'Wholesale socks from Feelsoft in Penjaringan, North Jakarta. Browse our collection and prices per dozen. Shipping across Indonesia and worldwide.' }
+};

@@ -1,0 +1,17 @@
+{
+  "method": "Built-in image_gen tool, original generation. PNG outputs encoded to WebP for website performance; content unchanged.",
+  "assets": [
+    {
+      "path": "dist/assets/hero.webp",
+      "prompt": "Use case: product-mockup. Asset type: hero photograph for a premium, contemporary wholesale socks website named Feelsoft. Create one photorealistic editorial product still-life, landscape 3:2 aspect ratio. Six unbranded finely ribbed cotton socks, colors forest green, soft sage, ivory, pale butter yellow and dusty lavender, artfully arranged as sculptural soft folded forms over two simple rounded pale pistachio plinths. Large sculptural upright forest-green sock in foreground with realistic heel and toe, another ivory sock casually draped. Airy light mint studio backdrop with beautiful soft directional daylight and tactile detailed knit textures. Sophisticated art direction, intimate macro quality, playful but grown-up, restrained palette, luxury Scandinavian product photography. Composition fills the image with socks, especially center and right, designed to be cropped into a tall rounded rectangle on a webpage. No text, no labels, no logo, no people, no packaging, no watermarks. These are illustrative concept socks, not a depiction of any real inventory."
+    },
+    {
+      "path": "dist/assets/kids.webp",
+      "prompt": "Use case: product-mockup. Asset type: square ecommerce concept photograph for Feelsoft wholesale socks website. A beautiful neatly laid out pair of SMALL children's ribbed socks, soft butter yellow cotton with slightly darker golden heel and toe. Sock shapes clear and anatomically sensible. One sock on its side to show the heel, other neatly behind, artful diagonal composition on a solid pale lavender studio background. Photorealistic finely detailed knitted texture, soft directional natural light, soft shadows, modern playful tasteful high-end product photography. No logo, no text, no badge, no packaging, no hands. Product fills middle 70% of square. Illustrative product concept, not a real brand product."
+    },
+    {
+      "path": "dist/assets/split.webp",
+      "prompt": "Use case: product-mockup. Asset type: square product photograph for a modern socks wholesale website. A pair of elegant sage green cotton split-toe TABI socks, unmistakably TWO compartments at each toe: one rounded big-toe compartment separated by a clean small gap from the larger compartment for the other four toes. Not five-finger socks, not regular socks. Lay both socks flat diagonally on a solid soft pale mint studio background, one slightly overlapping the other, with separated toe shape clearly visible on the front sock at lower right. Ribbed ankle cuffs, beautiful fine knitted texture, realistic sock anatomy. Soft directional daylight, editorial luxury ecommerce photography, clean modern composition, full socks entirely in frame occupying about 70% of the image. No logos, no text, no packaging, no hands, no watermark. This is a concept illustration, not actual inventory."
+    }
+  ]
+}
