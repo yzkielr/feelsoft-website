@@ -3,6 +3,7 @@ import { en, messages } from './content.js';
 
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
+const on = (selector, event, handler) => $(selector)?.addEventListener(event, handler);
 const id = {};
 for (const el of $$('[data-i18n]')) id[el.dataset.i18n] = el.innerHTML;
 for (const [attribute, property] of [['data-alt', 'alt'], ['data-label', 'aria-label'], ['data-placeholder', 'placeholder']]) {
@@ -13,10 +14,12 @@ let lang = 'id';
 let lastFocus = null;
 let toastTimer;
 
+export function getLanguage() { return lang; }
+
 function setLanguage(value) {
   lang = value === 'en' ? 'en' : 'id';
   document.documentElement.lang = lang;
-  document.title = messages[lang].title;
+  document.title = document.body.dataset.page === 'pricelist' ? `${lang === 'en' ? 'Price list' : 'Daftar harga'} | Feelsoft` : document.body.dataset.familyTitle ? `${document.body.dataset.familyTitle} | Feelsoft` : messages[lang].title;
   $('meta[name="description"]').content = messages[lang].description;
   for (const el of $$('[data-i18n]')) el.innerHTML = translations[lang][el.dataset.i18n] ?? id[el.dataset.i18n];
   for (const el of $$('[data-product-name]')) el.textContent = products.find(p => p.id === el.dataset.productName).name[lang];
@@ -32,15 +35,22 @@ function setLanguage(value) {
     const variant = translations[lang][{ plain: 'variantPlain', sole: 'variantSole', pattern: 'variantPattern' }[el.dataset.orderVariant]];
     el.setAttribute('aria-label', `${translations[lang].splitName}, ${variant}, ${el.dataset.orderSize}, ${el.textContent} ${translations[lang].perDozen}`);
   }
-  $('#exchange-note').hidden = lang !== 'en';
+  if ($('#exchange-note')) $('#exchange-note').hidden = lang !== 'en';
   for (const el of $$('.usd-indicator')) el.hidden = lang !== 'en';
   try { localStorage.setItem('feelsoft-language', lang); } catch { /* Language remains usable without storage. */ }
   try { const url = new URL(location.href); url.searchParams.set('lang', lang); history.replaceState(null, '', url); } catch { /* Standalone local preview. */ }
   updateEstimate();
   updateOrderTotal();
+  for (const link of $$('a[data-local-link]')) {
+    const url = new URL(link.getAttribute('href'), location.href);
+    url.searchParams.set('lang', lang);
+    link.setAttribute('href', url.pathname + url.search + url.hash);
+  }
+  document.dispatchEvent(new CustomEvent('feelsoft:language', { detail: { lang } }));
 }
 
 function updateEstimate() {
+  if (!$('#estimate-product')) return;
   $('#estimate-variants').hidden = $('#estimate-product').value !== 'split';
   try {
     const qty = parseQuantity($('#estimate-qty').value);
@@ -61,6 +71,7 @@ function updateEstimate() {
 }
 
 function updateOrderTotal() {
+  if (!$('#order-product')) return;
   $('#order-variants').hidden = $('#order-product').value !== 'split';
   try {
     const qty = parseQuantity($('#order-quantity').value);
@@ -73,7 +84,7 @@ function updateOrderTotal() {
 }
 
 function closeMenu() { $('#mobile-nav').hidden = true; $('.menu-toggle').setAttribute('aria-expanded', 'false'); }
-function openOrder(productId = 'kids', quantity = 1, variantId = 'plain', size = 'S') {
+export function openOrder(productId = 'kids', quantity = 1, variantId = 'plain', size = 'S') {
   lastFocus = document.activeElement;
   closeMenu();
   $('#order-product').value = productId;
@@ -104,16 +115,16 @@ for (const link of $$('#mobile-nav a')) link.addEventListener('click', closeMenu
 document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
 document.addEventListener('click', event => { if (!event.target.closest('.site-header')) closeMenu(); });
 
-$('#estimate-qty').addEventListener('input', updateEstimate);
+on('#estimate-qty', 'input', updateEstimate);
 for (const [selector, delta] of [['#quantity-minus', -1], ['#quantity-plus', 1]]) {
-  $(selector).addEventListener('click', () => {
+  on(selector, 'click', () => {
     const current = Number($('#estimate-qty').value);
     $('#estimate-qty').value = Math.min(100000, Math.max(1, (Number.isFinite(current) ? Math.round(current) : 1) + delta));
     updateEstimate();
   });
 }
-$('#estimate-order').addEventListener('click', () => { try { openOrder($('#estimate-product').value, parseQuantity($('#estimate-qty').value), $('#estimate-variant').value, $('#estimate-size').value); } catch { updateEstimate(); } });
-for (const selector of ['#estimate-product', '#estimate-variant', '#estimate-size']) $(selector).addEventListener('change', updateEstimate);
+on('#estimate-order', 'click', () => { try { openOrder($('#estimate-product').value, parseQuantity($('#estimate-qty').value), $('#estimate-variant').value, $('#estimate-size').value); } catch { updateEstimate(); } });
+for (const selector of ['#estimate-product', '#estimate-variant', '#estimate-size']) on(selector, 'change', updateEstimate);
 for (const selector of ['#order-variant', '#order-size']) $(selector).addEventListener('change', updateOrderTotal);
 $('#order-product').addEventListener('change', updateOrderTotal);
 $('#order-quantity').addEventListener('input', updateOrderTotal);
@@ -129,7 +140,7 @@ $('#order-form').addEventListener('submit', event => {
   } catch { $('#order-error').textContent = messages[lang].invalidQuantity; }
 });
 
-$('#download-prices').addEventListener('click', () => {
+on('#download-prices', 'click', () => {
   const t = translations[lang];
   const rows = [[t.tableProduct, t.variantLabel, t.sizeLabel, t.lengthLabel, t.tableUnit, t.tablePrice, lang === 'en' ? 'Currency' : 'Mata uang'], ...priceRows(lang).map(p => [p.product, p.variant, p.size, p.length, t.oneDozen, lang === 'en' ? (p.priceIdr / config.idrPerUsd).toFixed(2) : String(p.priceIdr), lang === 'en' ? 'USD' : 'IDR']), [], [t.priceNote]];
   if (lang === 'en') rows.push([`Indicative conversion: IDR ${config.idrPerUsd}/USD, ${config.rateDate}. Final USD quote to be confirmed.`, config.rateSource]);

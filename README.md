@@ -7,7 +7,10 @@ Static bilingual wholesale catalogue. Run `npm start` and open `http://127.0.0.1
 - `dist/index.html`: Indonesian content and page structure.
 - `dist/content.js`: English content and runtime messages.
 - `dist/core.js`: WhatsApp, products, IDR prices, conversion rate and order logic. Never substitute `0` for an unknown price; use `null`.
-- `scripts/sync-mk-catalog.mjs`: run `npm run sync:catalog` after changing MK product data; updates static catalogue cards, price rows and order options from `algoProducts`.
+- `dist/catalog.js`: collection metadata, colour labels and indicative swatches.
+- `dist/product.js` and `dist/catalog.css`: product detail interactions and responsive catalogue layouts.
+- `scripts/sync-mk-catalog.mjs`: run `npm run sync:catalog` after catalogue changes; generates compact home cards, five detail pages, a separate price list and order options.
+- `templates/pricelist-section.html`: source for the complete price table and estimator.
 - `dist/styles.css`: responsive styling.
 - `dist/references.html`: five researched reference websites and pending business data.
 - `dist/assets/`: illustrative AI product imagery, supplied Feelsoft logo prepared with a transparent exterior, and Manrope font under OFL.
@@ -19,6 +22,8 @@ USD values are indicative conversions using Bank Indonesia JISDOR 18,278 IDR/USD
 The supplied Feelsoft logo is installed. The exterior white background was removed with the built-in imagegen tool while preserving the brand artwork. Product images remain illustrative. Both supplied price lists, SKM and Algojaya, are implemented. Obtain actual product photographs, material and size details, availability, and order terms from Tria. Do not reuse other manufacturers' claims, images, testimonials or certifications. `noindex` is intentional for the prototype; Sites access remains owner-private.
 
 Algojaya prices per dozen: all six MK Casual options (Mix Cokelat, Mix, Hitam, Navy, Abu Tua, Abu Muda) are IDR 25,500. MK Mesh Navy, Hitam and Abu Muda are IDR 26,000; Putih is IDR 26,500. MK Mini Putih is IDR 26,500; Hitam, Navy and Abu Muda are IDR 26,000. MK sizes were not supplied and are not inferred from the split-toe range. English WhatsApp drafts include the original Indonesian catalogue name to keep orders identifiable. The downloadable price list contains 24 priced entries: 14 MK, 9 SKM size/variant combinations, and 1 kids' entry.
+
+The landing page shows one card per collection. Casual, Mesh and Mini detail pages offer their own colour choices; Jempol offers three variants and sizes S/M/L with supplied lengths. The full 24-entry price list, estimator and CSV export are on `pricelist.html`. Selection, quantity, language and WhatsApp order details stay synchronized; colour samples and product images remain illustrative.
 
 Visual browser QA was unavailable in the execution environment. Automated DOM tests are not a substitute for checking responsive layout in a real browser.
 
