@@ -1,4 +1,7 @@
 export const en = {
+  casualImageAlt: 'Concept illustration of navy MK Casual socks',
+  meshImageAlt: 'Concept illustration of light grey MK Mesh socks',
+  miniImageAlt: 'Concept illustration of white MK Mini socks',
   detailImageAlt: 'Concept illustration of the Feelsoft socks collection',
   viewDetails: 'View details', collectionIntro: 'Choose a collection. Explore colours, prices and product information on its detail page.',
   sixChoices: '6 colour & mix options', fourChoices: '4 colour options', otherCollections: 'More collections',

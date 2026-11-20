@@ -17,6 +17,21 @@
       "path": "dist/assets/feelsoft-logo.png",
       "method": "Built-in imagegen background extraction from the user-supplied logo; supplied lettering, socks and blue disc retained.",
       "prompt": "Edit target: the attached original Feelsoft logo. Prepare this EXACT supplied logo as a website image asset. ONLY remove the white background OUTSIDE the large navy blue circle, making the area outside the circle transparent. Preserve the complete navy blue circular disc, its exact blue hue, the two white sock symbols, and the original white cursive word Feelsoft without changing, redrawing, restyling, repositioning, or respelling any of them. The text must remain exactly Feelsoft, with original typography. Keep the circle completely intact, centered and fully visible with a small transparent margin. Do not make the white logo lettering or sock icons transparent. Do not add text, shadows, gradients, decorations, extra symbols, or a new logo. Output a faithful clean cutout of the existing brand logo."
+    },
+    {
+      "path": "dist/assets/casual-collection.webp",
+      "prompt": "Use case: product-mockup. Asset type: landscape 3:2 product illustration for a modern wholesale socks website collection card. A neat pair of unbranded plain navy blue casual crew socks, one lying diagonally with its clear rounded heel and toe visible, second lightly overlapping behind, fine knitted texture and simple ribbed cuffs. Pale cool blue studio background (#e4ebf6), soft directional daylight, gentle grounded shadow, clean premium ecommerce photography. The complete socks are centered, occupy the middle 65% of the canvas with generous empty margins for a responsive crop. No text, letters, logos, stripes, packaging, people, shoes or watermark. This is an illustrative product concept, not an actual inventory photo.",
+      "method": "Built-in image_gen; encoded as WebP without changing image content."
+    },
+    {
+      "path": "dist/assets/mesh-collection.webp",
+      "prompt": "Use case: product-mockup. Asset type: landscape 3:2 product illustration for a modern wholesale socks website collection card. A neat pair of unbranded light grey mesh-knit ankle socks with a clearly visible fine perforated knit panel on the top of the foot, solid knit heel and rounded toe and simple short ribbed cuffs. One sock lying diagonally with heel visible, second lightly overlapping behind. Pale cool mist blue-green studio background (#e9f0f1), soft directional daylight, gentle grounded shadow, clean premium ecommerce photography. The complete socks are centered, occupy the middle 65% of the canvas with generous empty margins for a responsive crop. No text, letters, logos, stripes, packaging, people, shoes or watermark. This is an illustrative product concept, not an actual inventory photo.",
+      "method": "Built-in image_gen; encoded as WebP without changing image content."
+    },
+    {
+      "path": "dist/assets/mini-collection.webp",
+      "prompt": "Use case: product-mockup. Asset type: landscape 3:2 product illustration for a modern wholesale socks website collection card. A neat pair of unbranded white low-cut mini ankle socks, visibly short silhouette with a low opening and almost no leg shaft, solid fine knitted texture, gently rounded heel and toe. One sock lying diagonally, second lightly overlapping behind, each complete sock fully visible. Pale lavender studio background (#eeeaf5), soft directional daylight, gentle grounded shadow, clean premium ecommerce photography. The socks are centered, occupy the middle 65% of the canvas with generous empty margins for a responsive crop. No text, letters, logos, stripes, packaging, people, shoes or watermark. This is an illustrative product concept, not an actual inventory photo.",
+      "method": "Built-in image_gen; encoded as WebP without changing image content."
     }
   ]
 }
