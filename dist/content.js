@@ -1,4 +1,9 @@
 export const en = {
+  algoEyebrow: 'MORE CHOICE, BY THE DOZEN', algoTitle: 'Meet the MK collections.',
+  algoDescription: 'Explore MK Casual, MK Mesh and MK Mini. Select a product to discuss your order.',
+  casualSummary: 'Six choices, one price per dozen.', meshSummary: 'Four colour options to choose from.', miniSummary: 'Four colour options to choose from.',
+  algoPhotoNote: 'Ask us for actual product photos, materials, sizes and availability.',
+  algoPriceTitle: 'MK collection price list', algoPriceDescription: 'All 14 options, with prices per dozen.',
   fromPrice: 'From', variantLabel: 'Variant', sizeLabel: 'Size', lengthLabel: 'Length',
   variantPlain: 'Plain cream / black', variantSole: 'Sole style (Telapak)', variantPattern: 'Patterned',
   sizeS: 'S · 26–28 cm', sizeM: 'M · 34–36 cm', sizeL: 'L · 40 cm',
@@ -13,7 +18,7 @@ export const en = {
   heroAlt: 'Concept illustration of knitted socks in green, cream and pastel colours', conceptImage: 'Concept visual · not actual product photography',
   kidsCollection: 'The kids’ collection', perDozen: '/ dozen', benefitDozen: 'Clear pricing by the dozen', benefitContact: 'Talk directly on WhatsApp', benefitShipping: 'Worldwide shipping',
   collectionEyebrow: 'FIND YOUR NEXT PICK', collectionTitle: 'Little essentials. Big possibilities.',
-  collectionDescription: 'From kids’ socks to split-toe styles. Explore choices for your customers’ everyday needs.', filterLabel: 'Filter collection', filterAll: 'All collections', filterKids: 'Kids', filterSplit: 'Split-toe', unitLabel: 'PRICES PER DOZEN',
+  collectionDescription: 'Explore MK Casual, Mesh, Mini, kids’ and split-toe socks. Find the right choices for your customers.', filterLabel: 'Filter collection', filterAll: 'All collections', filterKids: 'Kids', filterSplit: 'Split-toe', unitLabel: 'PRICES PER DOZEN',
   kidsOpen: 'View kids’ socks', kidsAlt: 'Concept illustration of pastel yellow children’s socks', kidsTag: 'For little steps', illustration: 'Product illustration', kidsName: 'Kids’ socks', kidsSubtitle: 'For your little customers',
   splitOpen: 'View split-toe socks', splitAlt: 'Concept illustration of socks with a separate big-toe compartment', splitTag: 'Split-toe style', splitName: 'Split-toe socks', splitSubtitle: 'A separate space for the big toe', requestPrice: 'Request price',
   noteEyebrow: 'LET’S FIND YOUR FIT', noteTitle: 'Your needs. Our starting point.', noteDescription: 'Have a style, size or quantity in mind? Tell us what you are looking for and we’ll check the available options.', discuss: 'Tell us what you need',

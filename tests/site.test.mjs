@@ -113,7 +113,76 @@ test('price export preserves dozen units and marks converted USD prices', async 
     assert.match(text, /1 dozen/); assert.match(text, /1.42/); assert.match(text, /Plain cream \/ black/); assert.match(text, /Indicative conversion/);
     assert.match(text, /26–28 cm/); assert.match(text, /34–36 cm/); assert.match(text, /40 cm/);
     assert.equal(text.split('\r\n').filter(line => line.includes('"Split-toe socks"')).length, 9);
+    assert.equal(text.split('\r\n').filter(line => /^"MK /.test(line)).length, 14);
+    assert.equal(text.split('\r\n').filter(line => line.includes('"1 dozen"')).length, 24);
     assert.doesNotMatch(text, /Request price/);
+  } finally { dom.window.close(); }
+});
+
+test('all 14 Algojaya names and per-dozen prices match the supplied list', () => {
+  const expected = [
+    ['casual-mix-brown','MK Casual Mix Cokelat',25500], ['casual-mix','MK Casual Mix',25500],
+    ['casual-black','MK Casual Hitam',25500], ['casual-navy','MK Casual Navy',25500],
+    ['casual-dark-grey','MK Casual Abu Tua',25500], ['casual-light-grey','MK Casual Abu Muda',25500],
+    ['mesh-navy','MK Mesh Navy',26000], ['mesh-black','MK Mesh Hitam',26000],
+    ['mesh-light-grey','MK Mesh Abu Muda',26000], ['mesh-white','MK Mesh Putih',26500],
+    ['mini-white','MK Mini Putih',26500], ['mini-black','MK Mini Hitam',26000],
+    ['mini-navy','MK Mini Navy',26000], ['mini-light-grey','MK Mini Abu Muda',26000]
+  ];
+  const { dom, document: d } = setup();
+  try {
+    assert.equal(core.algoProducts.length, 14);
+    assert.equal(core.priceRows().length, 24);
+    for (const [id, name, amount] of expected) {
+      assert.equal(core.products.find(p => p.id === id).name.id, name);
+      assert.equal(core.unitPrice(id), amount);
+      assert.equal(core.estimate(id, 12), amount * 12);
+      assert.equal(d.querySelector(`#order-product option[value="${id}"]`).textContent, name);
+      const row = d.querySelector(`.algo-price-table [data-product-name="${id}"]`).closest('tr');
+      assert.equal(row.querySelector('[data-price]').textContent, core.money(amount));
+      row.querySelector('[data-order]').click();
+      assert.equal(d.querySelector('#order-product').value, id);
+      assert.equal(d.querySelector('#order-variants').hidden, true);
+      assert.equal(d.querySelector('#order-total').textContent, core.money(amount));
+      d.querySelector('.close-dialog').click();
+    }
+  } finally { dom.window.close(); }
+});
+
+test('MK family filters and English orders preserve the precise catalogue choice', () => {
+  const { dom, document: d, opened } = setup();
+  try {
+    for (const category of ['casual','mesh','mini']) {
+      d.querySelector(`[data-filter="${category}"]`).click();
+      const visible = [...d.querySelectorAll('[data-category]')].filter(el => !el.hidden);
+      assert.equal(visible.length, 1);
+      assert.equal(visible[0].dataset.category, category);
+      assert.equal(d.querySelector('.product-grid').hidden, true);
+      assert.equal(d.querySelector('.algo-product-grid').hidden, false);
+    }
+    d.querySelector('[data-filter="kids"]').click();
+    assert.equal(d.querySelector('.algo-product-grid').hidden, true);
+    d.querySelector('[data-filter="all"]').click();
+    assert.equal(d.querySelectorAll('[data-category]:not([hidden])').length, 5);
+    assert.equal(d.querySelector('.collection-note').hidden, false);
+    d.querySelector('#estimate-product').value = 'mesh-white';
+    d.querySelector('#estimate-product').dispatchEvent(new dom.window.Event('change'));
+    d.querySelector('#estimate-qty').value = '12';
+    d.querySelector('#estimate-qty').dispatchEvent(new dom.window.Event('input'));
+    assert.equal(d.querySelector('#estimate-variants').hidden, true);
+    assert.match(d.querySelector('#estimate-total').textContent, /318\.000/);
+    d.querySelector('[data-lang="en"]').click();
+    assert.equal(d.querySelector('#estimate-product').value, 'mesh-white');
+    assert.equal(d.querySelector('#estimate-product option:checked').textContent, 'MK Mesh White');
+    d.querySelector('#estimate-order').click();
+    d.querySelector('#order-destination').value = 'Singapore';
+    d.querySelector('#order-form').dispatchEvent(new dom.window.Event('submit', {bubbles:true,cancelable:true}));
+    const message = new URL(opened[0][0]).searchParams.get('text');
+    assert.match(message, /Product: MK Mesh White/);
+    assert.match(message, /Catalogue name \(ID\): MK Mesh Putih/);
+    assert.match(message, /Quantity: 12 dozen/);
+    assert.match(message, /USD\s17\.40/);
+    assert.doesNotMatch(message, /Size \/ length:/);
   } finally { dom.window.close(); }
 });
 

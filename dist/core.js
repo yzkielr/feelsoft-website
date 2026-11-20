@@ -5,9 +5,27 @@ export const config = Object.freeze({
   rateSource: 'https://www.bi.go.id/en/statistik/informasi-kurs/jisdor/Default.aspx'
 });
 
+export const algoProducts = Object.freeze([
+  { id: 'casual-mix-brown', category: 'casual', name: { id: 'MK Casual Mix Cokelat', en: 'MK Casual Brown Mix' }, priceIdr: 25500 },
+  { id: 'casual-mix', category: 'casual', name: { id: 'MK Casual Mix', en: 'MK Casual Mix' }, priceIdr: 25500 },
+  { id: 'casual-black', category: 'casual', name: { id: 'MK Casual Hitam', en: 'MK Casual Black' }, priceIdr: 25500 },
+  { id: 'casual-navy', category: 'casual', name: { id: 'MK Casual Navy', en: 'MK Casual Navy' }, priceIdr: 25500 },
+  { id: 'casual-dark-grey', category: 'casual', name: { id: 'MK Casual Abu Tua', en: 'MK Casual Dark Grey' }, priceIdr: 25500 },
+  { id: 'casual-light-grey', category: 'casual', name: { id: 'MK Casual Abu Muda', en: 'MK Casual Light Grey' }, priceIdr: 25500 },
+  { id: 'mesh-navy', category: 'mesh', name: { id: 'MK Mesh Navy', en: 'MK Mesh Navy' }, priceIdr: 26000 },
+  { id: 'mesh-black', category: 'mesh', name: { id: 'MK Mesh Hitam', en: 'MK Mesh Black' }, priceIdr: 26000 },
+  { id: 'mesh-light-grey', category: 'mesh', name: { id: 'MK Mesh Abu Muda', en: 'MK Mesh Light Grey' }, priceIdr: 26000 },
+  { id: 'mesh-white', category: 'mesh', name: { id: 'MK Mesh Putih', en: 'MK Mesh White' }, priceIdr: 26500 },
+  { id: 'mini-white', category: 'mini', name: { id: 'MK Mini Putih', en: 'MK Mini White' }, priceIdr: 26500 },
+  { id: 'mini-black', category: 'mini', name: { id: 'MK Mini Hitam', en: 'MK Mini Black' }, priceIdr: 26000 },
+  { id: 'mini-navy', category: 'mini', name: { id: 'MK Mini Navy', en: 'MK Mini Navy' }, priceIdr: 26000 },
+  { id: 'mini-light-grey', category: 'mini', name: { id: 'MK Mini Abu Muda', en: 'MK Mini Light Grey' }, priceIdr: 26000 }
+]);
+
 export const products = Object.freeze([
   { id: 'kids', category: 'kids', name: { id: 'Kaus kaki anak', en: 'Kids’ socks' }, priceIdr: 26000, image: 'assets/kids.webp' },
-  { id: 'split', category: 'split', name: { id: 'Kaus kaki jempol', en: 'Split-toe socks' }, priceIdr: null, image: 'assets/split.webp' }
+  { id: 'split', category: 'split', name: { id: 'Kaus kaki jempol', en: 'Split-toe socks' }, priceIdr: null, image: 'assets/split.webp' },
+  ...algoProducts
 ]);
 
 export const sizes = Object.freeze([
@@ -25,7 +43,7 @@ export const splitVariants = Object.freeze([
 export function unitPrice(productId, variantId, size) {
   const product = products.find(p => p.id === productId);
   if (!product) throw new RangeError('Unknown product');
-  if (productId === 'kids') return product.priceIdr;
+  if (productId !== 'split') return product.priceIdr;
   const variant = splitVariants.find(v => v.id === variantId);
   if (!variant || !sizes.some(s => s.id === size)) throw new RangeError('Select a valid variant and size');
   return variant.prices[size];
@@ -37,7 +55,7 @@ export function minimumPrice(productId) {
 }
 
 export function priceRows(lang = 'id') {
-  return [{ product: products[0].name[lang], variant: '—', size: '—', length: '—', priceIdr: unitPrice('kids') },
+  return [...products.filter(p => p.id !== 'split').map(p => ({ product: p.name[lang], variant: '—', size: '—', length: '—', priceIdr: unitPrice(p.id) })),
     ...splitVariants.flatMap(v => sizes.map(s => ({ product: products[1].name[lang], variant: v.name[lang], size: s.id, length: s.length, priceIdr: v.prices[s.id] })))];
 }
 
@@ -81,6 +99,9 @@ export function orderMessage({ lang = 'id', productId = 'kids', quantity = 1, va
     const variant = splitVariants.find(v => v.id === variantId);
     const selectedSize = sizes.find(s => s.id === size);
     lines.splice(2, 0, `${en ? 'Variant' : 'Varian'}: ${variant.name[lang]}`, `${en ? 'Size / length' : 'Ukuran / panjang'}: ${size} / ${selectedSize.length}`, `${en ? 'Price per dozen' : 'Harga per lusin'}: ${money(unitPrice(productId, variantId, size), lang)}`);
+  } else {
+    lines.splice(2, 0, `${en ? 'Price per dozen' : 'Harga per lusin'}: ${money(p.priceIdr, lang)}`);
+    if (en && algoProducts.some(product => product.id === productId)) lines.splice(2, 0, `Catalogue name (ID): ${p.name.id}`);
   }
   if (name.trim()) lines.push(`${en ? 'Name / business' : 'Nama / usaha'}: ${name.trim().slice(0, 120)}`);
   if (destination.trim()) lines.push(`${en ? 'Delivery destination' : 'Tujuan pengiriman'}: ${destination.trim().slice(0, 180)}`);

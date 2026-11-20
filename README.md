@@ -7,6 +7,7 @@ Static bilingual wholesale catalogue. Run `npm start` and open `http://127.0.0.1
 - `dist/index.html`: Indonesian content and page structure.
 - `dist/content.js`: English content and runtime messages.
 - `dist/core.js`: WhatsApp, products, IDR prices, conversion rate and order logic. Never substitute `0` for an unknown price; use `null`.
+- `scripts/sync-mk-catalog.mjs`: run `npm run sync:catalog` after changing MK product data; updates static catalogue cards, price rows and order options from `algoProducts`.
 - `dist/styles.css`: responsive styling.
 - `dist/references.html`: five researched reference websites and pending business data.
 - `dist/assets/`: illustrative AI product imagery, supplied Feelsoft logo prepared with a transparent exterior, and Manrope font under OFL.
@@ -15,7 +16,9 @@ Confirmed: WhatsApp +62 821-7000-2960; Penjaringan, North Jakarta; children's so
 
 USD values are indicative conversions using Bank Indonesia JISDOR 18,278 IDR/USD dated 2026-11-20. Update `config` with an approved rate or replace with approved export prices before public launch. There is no live exchange-rate API. The customer-visible rate disclosure and reference page must be updated alongside the config.
 
-The supplied Feelsoft logo is installed. The exterior white background was removed with the built-in imagegen tool while preserving the brand artwork. Product images remain illustrative. Obtain actual product photographs, SKU details and the remaining Algojaya price list from Tria. The SKM price list is already implemented. Do not reuse other manufacturers' claims, images, testimonials or certifications. `noindex` is intentional for the prototype; Sites access remains owner-private.
+The supplied Feelsoft logo is installed. The exterior white background was removed with the built-in imagegen tool while preserving the brand artwork. Product images remain illustrative. Both supplied price lists, SKM and Algojaya, are implemented. Obtain actual product photographs, material and size details, availability, and order terms from Tria. Do not reuse other manufacturers' claims, images, testimonials or certifications. `noindex` is intentional for the prototype; Sites access remains owner-private.
+
+Algojaya prices per dozen: all six MK Casual options (Mix Cokelat, Mix, Hitam, Navy, Abu Tua, Abu Muda) are IDR 25,500. MK Mesh Navy, Hitam and Abu Muda are IDR 26,000; Putih is IDR 26,500. MK Mini Putih is IDR 26,500; Hitam, Navy and Abu Muda are IDR 26,000. MK sizes were not supplied and are not inferred from the split-toe range. English WhatsApp drafts include the original Indonesian catalogue name to keep orders identifiable. The downloadable price list contains 24 priced entries: 14 MK, 9 SKM size/variant combinations, and 1 kids' entry.
 
 Visual browser QA was unavailable in the execution environment. Automated DOM tests are not a substitute for checking responsive layout in a real browser.
 

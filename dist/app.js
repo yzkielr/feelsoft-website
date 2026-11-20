@@ -19,6 +19,7 @@ function setLanguage(value) {
   document.title = messages[lang].title;
   $('meta[name="description"]').content = messages[lang].description;
   for (const el of $$('[data-i18n]')) el.innerHTML = translations[lang][el.dataset.i18n] ?? id[el.dataset.i18n];
+  for (const el of $$('[data-product-name]')) el.textContent = products.find(p => p.id === el.dataset.productName).name[lang];
   for (const [attribute, property] of [['data-alt', 'alt'], ['data-label', 'aria-label'], ['data-placeholder', 'placeholder']]) {
     for (const el of $$(`[${attribute}]`)) el.setAttribute(property, translations[lang][el.getAttribute(attribute)] ?? id[el.getAttribute(attribute)]);
   }
@@ -91,6 +92,8 @@ for (const el of $$('[data-filter]')) el.addEventListener('click', () => {
   const category = el.dataset.filter;
   for (const button of $$('[data-filter]')) button.setAttribute('aria-pressed', String(button === el));
   for (const card of $$('[data-category]')) card.hidden = category !== 'all' && card.dataset.category !== category;
+  $('.collection-note').hidden = category !== 'all';
+  for (const grid of $$('.product-grid, .algo-product-grid')) grid.hidden = ![...grid.querySelectorAll('[data-category]')].some(card => !card.hidden);
 });
 $('.menu-toggle').addEventListener('click', () => {
   const expanded = $('.menu-toggle').getAttribute('aria-expanded') === 'true';
