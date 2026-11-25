@@ -28,7 +28,7 @@ export const en = {
   splitRange: 'Three styles. Sizes S, M and L.', splitChoices: 'Plain · Sole style · Patterned',
   skip: 'Skip to content', announcement: 'From Jakarta, for every step.', shipShort: 'Shipping across Indonesia & worldwide',
   navCollection: 'Collection', navPrices: 'Price list', navAbout: 'About us', contact: 'Let’s talk', navLabel: 'Main navigation', menuLabel: 'Open menu',
-  heroEyebrow: 'WHOLESALE SOCKS, BY FEELSOFT', heroLine1: 'Soft on feet.', heroLine2: 'Right for business.',
+  heroEyebrow: 'WHOLESALE SOCKS, BY FEELSOFT', heroLine1: 'Comfort for every step.', heroLine2: 'Direct from the manufacturer.',
   heroDescription: 'Bring more choice to your customers. Shop socks by the dozen, tell us what you need, and ship wherever your business takes you.',
   explore: 'Explore the collection', seePrices: 'View price list', dozenTitle: 'One dozen. More possibilities.', dozenSub: 'All prices & orders are by the dozen.',
   heroAlt: 'Concept illustration of knitted socks in green, cream and pastel colours', conceptImage: 'Concept visual · not actual product photography',
