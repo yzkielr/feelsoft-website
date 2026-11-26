@@ -18,7 +18,7 @@ const mkPrices = [
   ['mini-white','MK Mini Putih',26500],['mini-black','MK Mini Hitam',26000],
   ['mini-navy','MK Mini Navy',26000],['mini-light-grey','MK Mini Abu Muda',26000]
 ];
-const skmPrices = [['plain','S',41000],['plain','M',42000],['plain','L',44000],['sole','S',42000],['sole','M',43000],['sole','L',44000],['pattern','S',43000],['pattern','M',44000],['pattern','L',46000]];
+const skmPrices = [['plain','S',41000],['plain','M',42000],['plain','L',44000],['plain-black','S',41000],['plain-black','M',42000],['plain-black','L',44000],['sole','S',42000],['sole','M',43000],['sole','L',44000],['sole-white','S',42000],['sole-white','M',43000],['sole-white','L',44000],['pattern','S',43000],['pattern','M',44000],['pattern','L',46000]];
 
 function setup(page='index.html', lang='id', query='') {
   const dom=new JSDOM(read(page),{url:`https://feelsoft.example/${page}?lang=${lang}${query}`,runScripts:'outside-only'});
@@ -33,7 +33,7 @@ function setup(page='index.html', lang='id', query='') {
 }
 
 test('all supplied prices and lengths stay exact, with every transaction in dozens',()=>{
-  assert.equal(core.algoProducts.length,14);assert.equal(core.priceRows().length,24);
+  assert.equal(core.algoProducts.length,14);assert.equal(core.priceRows().length,30);
   for(const [id,name,amount] of mkPrices){assert.equal(core.products.find(p=>p.id===id).name.id,name);assert.equal(core.unitPrice(id),amount);assert.equal(core.estimate(id,12),amount*12);}
   for(const [variant,size,amount] of skmPrices){assert.equal(core.unitPrice('split',variant,size),amount);assert.equal(core.estimate('split',12,variant,size),amount*12);}
   assert.equal(core.estimate('kids',12),312000);assert.deepEqual(core.sizes.map(s=>s.length),['26–28 cm','34–36 cm','40 cm']);
@@ -93,12 +93,37 @@ test('selected colour, quantity, USD price and original SKU survive the WhatsApp
 
 test('split-toe detail page offers all styles and lengths with correct totals and WhatsApp selection',()=>{
   const {dom,d,opened,event}=setup('jempol.html');try{
-    assert.equal(d.querySelectorAll('[data-detail-variant]').length,3);assert.equal(d.querySelectorAll('[data-detail-size]').length,3);
+    assert.equal(d.querySelectorAll('[data-detail-variant]').length,5);assert.equal(d.querySelectorAll('[data-detail-size]').length,3);
     for(const [variant,size,amount] of skmPrices){d.querySelector(`[data-detail-variant="${variant}"]`).click();d.querySelector(`[data-detail-size="${size}"]`).click();assert.equal(d.querySelector('#detail-price').textContent,core.money(amount));assert.match(d.querySelector('#spec-size').textContent,new RegExp(size));}
     event('#detail-quantity','5');assert.match(d.querySelector('#detail-total').textContent,/230\.000/);
     d.querySelector('[data-lang="en"]').click();assert.match(d.querySelector('#detail-selected').textContent,/Patterned.*L.*40 cm/);
     d.querySelector('#detail-order').click();assert.equal(d.querySelector('#order-variant').value,'pattern');assert.equal(d.querySelector('#order-size').value,'L');assert.equal(d.querySelector('#order-quantity').value,'5');
     event('#order-destination','Singapore');d.querySelector('#order-form').dispatchEvent(new dom.window.Event('submit',{bubbles:true,cancelable:true}));const message=new URL(opened[0][0]).searchParams.get('text');assert.match(message,/Variant: Patterned/);assert.match(message,/Size \/ length: L \/ 40 cm/);assert.match(message,/USD\s12\.58/);
+  }finally{dom.window.close();}
+});
+
+test('confirmed split-toe colours remain distinct through language, links, forms and WhatsApp',()=>{
+  const {dom,d,opened,event}=setup('jempol.html','id','&variant=sole-white&size=M');try{
+    assert.match(d.querySelector('#detail-selected').textContent,/Putih telapak hitam/);
+    assert.equal(d.querySelector('#detail-price').textContent,core.money(43000));
+    assert.equal(d.querySelector('#detail-pattern-note').hidden,true);
+    event('#detail-quantity','4');d.querySelector('[data-lang="en"]').click();
+    assert.match(d.querySelector('#detail-selected').textContent,/White with black soles/);
+    assert.equal(new URL(dom.window.location.href).searchParams.get('variant'),'sole-white');
+    d.querySelector('#detail-order').click();
+    assert.equal(d.querySelector('#order-variant').value,'sole-white');
+    assert.equal(d.querySelector('#order-variant option:checked').textContent,'White with black soles');
+    event('#order-destination','Singapore');d.querySelector('#order-form').dispatchEvent(new dom.window.Event('submit',{bubbles:true,cancelable:true}));
+    const message=new URL(opened[0][0]).searchParams.get('text');
+    assert.match(message,/Variant: White with black soles/);assert.match(message,/Quantity: 4 dozen/);assert.match(message,/Size \/ length: M \/ 34–36 cm/);
+    d.querySelector('.close-dialog').click();
+    d.querySelector('[data-lang="id"]').click();d.querySelector('[data-detail-variant="plain-black"]').click();
+    assert.match(d.querySelector('#detail-selected').textContent,/Hitam polos/);
+    assert.equal(d.querySelector('#detail-price').textContent,core.money(42000));
+    d.querySelector('[data-detail-variant="pattern"]').click();assert.equal(d.querySelector('#detail-pattern-note').hidden,false);
+    d.querySelector('#detail-order').click();assert.equal(d.querySelector('#order-pattern-note').hidden,false);
+    event('#order-variant','sole','change');assert.equal(d.querySelector('#order-pattern-note').hidden,true);
+    assert.equal(d.querySelector('#order-variant option:checked').textContent,'Cream telapak hitam');
   }finally{dom.window.close();}
 });
 
@@ -121,13 +146,13 @@ test('kids detail retains its price without invented colour or size options',()=
   const {dom,d,event}=setup('anak.html');try{assert.equal(d.querySelectorAll('[data-detail-product],[data-detail-size]').length,0);event('#detail-quantity','12');assert.match(d.querySelector('#detail-total').textContent,/312\.000/);}finally{dom.window.close();}
 });
 
-test('dedicated price list retains all 24 prices, estimator and full bilingual exports',async()=>{
+test('dedicated price list retains all 30 prices, estimator and full bilingual exports',async()=>{
   for(const language of ['id','en']){const {dom,d,event}=setup('pricelist.html',language);try{
-    assert.equal(d.querySelectorAll('.algo-price-table tbody tr').length,14);assert.equal(d.querySelectorAll('[data-order-variant]').length,9);
+    assert.equal(d.querySelectorAll('.algo-price-table tbody tr').length,14);assert.equal(d.querySelectorAll('[data-order-variant]').length,15);
     event('#estimate-product','split','change');event('#estimate-variant','pattern','change');event('#estimate-size','L','change');event('#estimate-qty','5');assert.equal(d.querySelector('#estimate-total').textContent,core.money(230000,language));
     let blob;dom.window.URL.createObjectURL=value=>{blob=value;return 'blob:test';};dom.window.URL.revokeObjectURL=()=>{};dom.window.HTMLAnchorElement.prototype.click=function(){};
     d.querySelector('#download-prices').click();const text=await new Promise((resolve,reject)=>{const reader=new dom.window.FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsText(blob);});
-    assert.equal(text.split('\r\n').filter(line=>line.includes(language==='en'?'"1 dozen"':'"1 lusin"')).length,24);
+    assert.equal(text.split('\r\n').filter(line=>line.includes(language==='en'?'"1 dozen"':'"1 lusin"')).length,30);
     assert.equal(text.split('\r\n').filter(line=>/^"MK /.test(line)).length,14);
     if(language==='en')assert.match(text,/Indicative conversion/);else{assert.match(text,/"MK Mesh Putih".*"26500"/);assert.match(text,/"MK Casual Mix Cokelat".*"25500"/);}
   }finally{dom.window.close();}}

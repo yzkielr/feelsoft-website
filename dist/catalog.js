@@ -5,7 +5,7 @@ export const families = [
   { id: 'mesh', file: 'mesh.html', title: { id: 'MK Mesh', en: 'MK Mesh' }, image: 'assets/mesh-collection.webp', defaultProduct: 'mesh-navy', summary: { id: 'Pilih Navy, Hitam, Abu Muda, atau Putih.', en: 'Choose Navy, Black, Light Grey or White.' } },
   { id: 'mini', file: 'mini.html', title: { id: 'MK Mini', en: 'MK Mini' }, image: 'assets/mini-collection.webp', defaultProduct: 'mini-black', summary: { id: 'Empat pilihan warna untuk kebutuhan Anda.', en: 'Four colour options for your needs.' } },
   { id: 'kids', file: 'anak.html', title: { id: 'Kaus kaki anak', en: 'Kids’ socks' }, image: 'assets/kids.webp', defaultProduct: 'kids', summary: { id: 'Kaus kaki anak dengan harga Rp26.000 per lusin.', en: 'Kids’ socks, priced by the dozen.' } },
-  { id: 'split', file: 'jempol.html', title: { id: 'Kaus kaki jempol', en: 'Split-toe socks' }, image: 'assets/split.webp', defaultProduct: 'split', summary: { id: 'Tiga varian dengan pilihan panjang S, M, dan L.', en: 'Three styles with lengths in S, M and L.' } }
+  { id: 'split', file: 'jempol.html', title: { id: 'Kaus kaki jempol', en: 'Split-toe socks' }, image: 'assets/split.webp', defaultProduct: 'split', summary: { id: 'Lima pilihan warna dan model, termasuk beberapa motif. Tersedia panjang S, M, dan L.', en: 'Five colour and style options, including several patterns. Lengths in S, M and L.' } }
 ];
 
 export function familyProducts(familyId) { return products.filter(p => p.category === familyId); }

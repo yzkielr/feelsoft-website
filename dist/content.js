@@ -1,4 +1,7 @@
 export const en = {
+  variantPlainCream: 'Plain cream', variantPlainBlack: 'Plain black',
+  variantSoleCream: 'Cream with black soles', variantSoleWhite: 'White with black soles',
+  patternNote: 'Several patterns are available. Describe your preferred pattern in the notes, or ask for photos of the available designs on WhatsApp.',
   casualImageAlt: 'Concept illustration of navy MK Casual socks',
   meshImageAlt: 'Concept illustration of light grey MK Mesh socks',
   miniImageAlt: 'Concept illustration of white MK Mini socks',
@@ -25,7 +28,7 @@ export const en = {
   sizeS: 'S · 26–28 cm', sizeM: 'M · 34–36 cm', sizeL: 'L · 40 cm',
   splitPriceTitle: 'Split-toe socks, your way.', splitPriceIntro: 'Choose your style and length. Every price below is per dozen.',
   splitTableCaption: 'Split-toe socks: prices per dozen by variant and size', choosePrice: 'Select a price to enquire about that variant and size.',
-  splitRange: 'Three styles. Sizes S, M and L.', splitChoices: 'Plain · Sole style · Patterned',
+  splitRange: 'Five colour and style options. Sizes S, M and L.', splitChoices: 'Plain · Sole style · Patterned',
   skip: 'Skip to content', announcement: 'From Jakarta, for every step.', shipShort: 'Shipping across Indonesia & worldwide',
   navCollection: 'Collection', navPrices: 'Price list', navAbout: 'About us', contact: 'Let’s talk', navLabel: 'Main navigation', menuLabel: 'Open menu',
   heroEyebrow: 'WHOLESALE SOCKS, BY FEELSOFT', heroLine1: 'Comfort for every step.', heroLine2: 'Direct from the manufacturer.',

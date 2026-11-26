@@ -35,9 +35,11 @@ export const sizes = Object.freeze([
 ]);
 
 export const splitVariants = Object.freeze([
-  { id: 'plain', name: { id: 'Cream / hitam polos', en: 'Plain cream / black' }, prices: { S: 41000, M: 42000, L: 44000 } },
-  { id: 'sole', name: { id: 'Telapak', en: 'Sole style (Telapak)' }, prices: { S: 42000, M: 43000, L: 44000 } },
-  { id: 'pattern', name: { id: 'Motif', en: 'Patterned' }, prices: { S: 43000, M: 44000, L: 46000 } }
+  { id: 'plain', labelKey: 'variantPlainCream', name: { id: 'Cream polos', en: 'Plain cream' }, prices: { S: 41000, M: 42000, L: 44000 } },
+  { id: 'plain-black', labelKey: 'variantPlainBlack', name: { id: 'Hitam polos', en: 'Plain black' }, prices: { S: 41000, M: 42000, L: 44000 } },
+  { id: 'sole', labelKey: 'variantSoleCream', name: { id: 'Cream telapak hitam', en: 'Cream with black soles' }, prices: { S: 42000, M: 43000, L: 44000 } },
+  { id: 'sole-white', labelKey: 'variantSoleWhite', name: { id: 'Putih telapak hitam', en: 'White with black soles' }, prices: { S: 42000, M: 43000, L: 44000 } },
+  { id: 'pattern', labelKey: 'variantPattern', name: { id: 'Motif', en: 'Patterned' }, prices: { S: 43000, M: 44000, L: 46000 } }
 ]);
 
 export function unitPrice(productId, variantId, size) {

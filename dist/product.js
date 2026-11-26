@@ -27,6 +27,7 @@ function updateDetail() {
   if(dq('#spec-choice')) dq('#spec-choice').textContent=family.id==='split'?variant.name[language]:colourName(product,language);
   if(dq('#spec-size')) dq('#spec-size').textContent=`${size.id} · ${size.length}`;
   dq('#detail-exchange').hidden=language!=='en';
+  if(dq('#detail-pattern-note')) dq('#detail-pattern-note').hidden=selectedVariant!=='pattern';
   for(const button of dqa('[data-detail-product]')) {
     button.setAttribute('aria-pressed',String(button.dataset.detailProduct===selectedId));
     button.querySelector('[data-colour-name]').textContent=colourName(products.find(p=>p.id===button.dataset.detailProduct),language);

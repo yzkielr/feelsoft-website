@@ -1,4 +1,4 @@
-import { config, products, money, parseQuantity, estimate, whatsappUrl, unitPrice, minimumPrice, priceRows } from './core.js';
+import { config, products, splitVariants, money, parseQuantity, estimate, whatsappUrl, unitPrice, minimumPrice, priceRows } from './core.js';
 import { en, messages } from './content.js';
 
 const $ = selector => document.querySelector(selector);
@@ -32,7 +32,7 @@ function setLanguage(value) {
     el.textContent = (lang === 'en' ? '≈ ' : '') + money(amount, lang);
   }
   for (const el of $$('[data-order-variant]')) {
-    const variant = translations[lang][{ plain: 'variantPlain', sole: 'variantSole', pattern: 'variantPattern' }[el.dataset.orderVariant]];
+    const variant = splitVariants.find(v => v.id === el.dataset.orderVariant).name[lang];
     el.setAttribute('aria-label', `${translations[lang].splitName}, ${variant}, ${el.dataset.orderSize}, ${el.textContent} ${translations[lang].perDozen}`);
   }
   if ($('#exchange-note')) $('#exchange-note').hidden = lang !== 'en';
@@ -73,6 +73,7 @@ function updateEstimate() {
 function updateOrderTotal() {
   if (!$('#order-product')) return;
   $('#order-variants').hidden = $('#order-product').value !== 'split';
+  if ($('#order-pattern-note')) $('#order-pattern-note').hidden = $('#order-product').value !== 'split' || $('#order-variant').value !== 'pattern';
   try {
     const qty = parseQuantity($('#order-quantity').value);
     $('#order-total').textContent = money(estimate($('#order-product').value, qty, $('#order-variant').value, $('#order-size').value), lang);
